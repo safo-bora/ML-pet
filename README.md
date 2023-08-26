@@ -1,11 +1,14 @@
 # ML-pet
-Project for learning purpose with Python + Arduino UNO 
-+ LCD Keypad Shield 1602
+## Project for learning purpose with Python + Arduino UNO + MediaPipe
 
-https://arduino.ua/prod235-lcd-keypad-shield
-Connection: RS - 8 pin, RW - 11 pin, Enable - 9 pin, DB4-7 - 4, 5, 6, 7.
+Doc: https://safo-bora-katerina.blogspot.com/2023/08/arduino-uno-and-python.html
 
 <img src="./img/IMG_5529.jpg" width="500" title="Python with Arduino">
+<img src="./img/IMG_5531.jpg" width="500" title="Python with Arduino">
+
+### LCD Keypad Shield 1602:
+https://arduino.ua/prod235-lcd-keypad-shield
+Connection: RS - 8 pin, RW - 11 pin, Enable - 9 pin, DB4-7 - 4, 5, 6, 7.
 
 # Key Features:
 

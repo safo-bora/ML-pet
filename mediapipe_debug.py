@@ -3,15 +3,20 @@ import cv2
 # import os
 # from gtts import gTTS
 
-from lib import ArduinoLCD, ArduinoLEDController
+arduino_logic = False
+
+if arduino_logic:
+    from lib import ArduinoLCD, ArduinoLEDController
 
 
 class ArduinoHelper(object):
-    lcd = ArduinoLCD()
-    led = ArduinoLEDController()
-    MAX_PINS = 5
-    pin_states = [False] * MAX_PINS  # False indicates off, True indicates on.
-    last_hands_state = None  # added to keep track of the previous hands_state
+
+    if arduino_logic:
+        lcd = ArduinoLCD()
+        led = ArduinoLEDController()
+        MAX_PINS = 5
+        pin_states = [False] * MAX_PINS  # False indicates off, True indicates on.
+        last_hands_state = None  # added to keep track of the previous hands_state
 
     @staticmethod
     def replace_second_space_with_newline(string):
@@ -90,7 +95,9 @@ def detect_hand_state(hand_landmarks):
 
     fingers_count = fingers_state.count(True)
     print("Number of Open Fingers:", fingers_count)
-    helper.toggle_target_led(str(fingers_count))
+
+    if arduino_logic:
+        helper.toggle_target_led(str(fingers_count))
 
     if all(not finger for finger in fingers_state):
         return "Fist"
@@ -129,7 +136,8 @@ def detect_hand_state(hand_landmarks):
 
 if __name__ == "__main__":
 
-    helper = ArduinoHelper()
+    if arduino_logic:
+        helper = ArduinoHelper()
 
     # Create objects for the drawing and hands modules
     mp_drawing = mp.solutions.drawing_utils
@@ -183,7 +191,9 @@ if __name__ == "__main__":
                             cv2.LINE_AA)
 
                 print("Hand State:", hand_state)
-                helper.sent_to_lcd(hands_state=hand_state)
+
+                if arduino_logic:
+                    helper.sent_to_lcd(hands_state=hand_state)
 
         cv2.imshow('MediaPipe Hands', frame)
 
@@ -196,8 +206,7 @@ if __name__ == "__main__":
     cap.release()
     cv2.destroyAllWindows()
 
-    helper.lcd.close_connection()
-    helper.led.turn_off_all_leds()
-    helper.led.close()
-
-
+    if arduino_logic:
+        helper.lcd.close_connection()
+        helper.led.turn_off_all_leds()
+        helper.led.close()
